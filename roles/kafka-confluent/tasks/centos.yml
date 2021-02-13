@@ -1,0 +1,78 @@
+---
+
+- name: install python tools
+  yum: name={{ item }} state=latest
+  with_items:
+   - epel-release
+   - python-pip
+   - curl
+   - which
+
+- name: Config config kafka
+  template: src=confluent.repo dest=/etc/yum.repos.d/confluent.repo
+
+- name: add key
+  shell: sudo rpm --import https://packages.confluent.io/rpm/5.3/archive.key
+  ignore_errors: yes
+
+- name: clean
+  shell: sudo yum clean all
+  ignore_errors: yes
+
+
+- name: install confluent
+  yum: name={{ item }} state=latest
+  with_items:
+   - confluent-platform-2.12
+
+- name: Config  zookeeper
+  template: src=zookeeper.properties dest=/etc/kafka/zookeeper.properties
+
+- name: Config  kafka
+  template: src=server.properties dest=/etc/kafka/server.properties
+
+- name: Config  schema
+  template: src=schema-registry.properties dest=/etc/schema-registry/schema-registry.properties
+
+
+- name: Config  kafka-rest
+  template: src=kafka-rest.properties dest=/etc/kafka-rest/kafka-rest.properties
+
+- name: Start  service zookeeper
+  service:
+    name: confluent-zookeeper
+    state: started
+    enabled: yes
+
+- name: Start  service kafka
+  service:
+    name: confluent-kafka
+    state: started
+    enabled: yes
+
+
+- name: Start  service schema-registry
+  service:
+    name: confluent-schema-registry
+    state: started
+    enabled: yes
+
+
+- name: Start  service control-center
+  service:
+    name: confluent-control-center
+    state: started
+    enabled: yes
+
+
+- name: Start  service kafka-connect
+  service:
+    name: confluent-kafka-connect
+    state: started
+    enabled: yes
+
+- name: Start  service kafka-connect
+  service:
+    name: confluent-kafka-connect
+    state: started
+    enabled: yes

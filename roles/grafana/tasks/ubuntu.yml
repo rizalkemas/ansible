@@ -1,0 +1,16 @@
+---
+
+
+- name: add repository 
+  shell: curl https://packagecloud.io/gpg.key | sudo apt-key add -
+  ignore_errors: yes
+
+- name: add repository grafana
+  shell: add-apt-repository "deb https://packagecloud.io/grafana/stable/debian/ stretch main"
+  ignore_errors: yes
+
+- name: install grafana
+  apt:
+   name=grafana
+   state=present 
+

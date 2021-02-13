@@ -1,0 +1,8 @@
+---
+- name: PHP | install php packages
+  apt: pkg="{{ item }}" state=latest
+  with_items:
+   - php-fpm
+   - php-mysql
+   - php-cli
+  become: yes
