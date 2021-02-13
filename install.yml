@@ -1,0 +1,4 @@
+- name: Install & Config Nginx & PHP
+  hosts: client
+  roles:
+    - sosialmedia

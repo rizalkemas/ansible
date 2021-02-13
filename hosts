@@ -1,0 +1,2 @@
+[client]
+3.135.183.178 ansible_ssh_private_key_file=/home/rizalkemas/Downloads/kemas.pem ansible_ssh_user=ubuntu
